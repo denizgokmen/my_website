@@ -84,6 +84,7 @@ disqusShortname = ""
     title = "Hi, my name is Deniz"
     subtitle = "Thank you for taking the time to view my blog!"
     buttonText = "Fun starts with this click"
+  
 
 
   # Tiles Section
@@ -110,10 +111,9 @@ disqusShortname = ""
       url = "blogs/magna"
 
     [[params.tiles.showcase]]
-      title = "Ipsum"
-      subtitle = "Nisl Sed Aliquam"
-      image = "pic04.jpg"
-      url = "blogs/ipsum"
+      title = "CV"
+      image = "DenizGokmen_resume*.pdf"
+      url = "blogs/CV"
       
     # You can make more showcases by copy and pasting the code above
 
