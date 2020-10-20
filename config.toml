@@ -101,7 +101,7 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "Deniz Gokmen"
       image = "pic02.jpg"
-      url = "blogs/Deniz Gokmen"
+      url = "blogs/blog1"
 
     [[params.tiles.showcase]]
       title = "Magna"
