@@ -38,7 +38,7 @@ disqusShortname = ""
   # Navigation Section
   [params.navigation]
     title = "Deniz Gokmen"
-    subtitle = "Porfolio Website by a MFA student"
+    subtitle = "Porfolio Website by MFA student"
     menu = "Menu"
     # Optional logo as brand stored in img/
     # logo = "logo.png"
@@ -114,18 +114,7 @@ disqusShortname = ""
       subtitle = "Nisl Sed Aliquam"
       image = "pic04.jpg"
       url = "blogs/ipsum"
-
-    [[params.tiles.showcase]]
-      title = "Consequat"
-      subtitle = "Ipsum Dolor Sit Amet"
-      image = "pic05.jpg"
-      url = "blogs/ipsum"
-
-    [[params.tiles.showcase]]
-      title = "Etiam"
-      subtitle = "Feugiat Amet Tempus"
-      image = "pic06.jpg"
-      url = "blogs/ipsum"
+      
     # You can make more showcases by copy and pasting the code above
 
   [params.blog]
@@ -207,9 +196,9 @@ disqusShortname = ""
       label = "GitHub"
 
     [[params.footer.social]]
-      icon = "fa-linkedin"
-      url= "www.linkedin.com/in/deniz-gokmen"
-      label = "LinkedIn"
+      icon = "#"
+      url= "#"
+      label = "#"
 
     [[params.footer.quicklinks]]
       text = "#"
