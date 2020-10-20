@@ -104,10 +104,9 @@ disqusShortname = ""
       url = "blogs/blog7"
 
     [[params.tiles.showcase]]
-      title = "Magna"
-      subtitle = "Lorem Etiam Nullam"
-      image = "pic03.jpg"
-      url = "blogs/magna"
+      title = "Tim Burton vs. Steven Spielberg"
+      image = "pic2000.jpg"
+      url = "blogs/blog8"
 
     [[params.tiles.showcase]]
       title = ""
