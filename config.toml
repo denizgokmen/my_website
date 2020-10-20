@@ -95,7 +95,7 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "Aliquam"
       subtitle = "Igdss Dolor Sit Amet"
-      image = "pic01.jpg"
+      image = "pic04.jpg"
       url = "blogs/aliquam"
 
     [[params.tiles.showcase]]
@@ -112,7 +112,7 @@ disqusShortname = ""
 
     [[params.tiles.showcase]]
       title = "CV"
-      image = "DenizGokmen_resume*.pdf"
+      image = "pic01.png"
       url = "blogs/CV"
       
     # You can make more showcases by copy and pasting the code above
