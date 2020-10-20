@@ -20,7 +20,7 @@ disqusShortname = ""
 
   # Provide your metadata here.
   name = "Deniz"
-  description = "Deniz's description"
+  description = "This is a blog by a MFA student"
 
   # Link custom assets relative to /static
   custom_css = []
@@ -37,8 +37,8 @@ disqusShortname = ""
 
   # Navigation Section
   [params.navigation]
-    title = "Forty"
-    subtitle = "By HTML5 Up"
+    title = "Deniz Gokmen"
+    subtitle = "Porfolio Website by a MFA student "
     menu = "Menu"
     # Optional logo as brand stored in img/
     # logo = "logo.png"
@@ -52,12 +52,12 @@ disqusShortname = ""
       url = "blogs"
 
     [[params.navigation.links]]
-      name = "Generic Blog"
-      url = "blogs/ipsum"
+      name = "#""
+      url = "#"
 
     [[params.navigation.links]]
-      name = "Elements"
-      url = "elements.html"
+      name = "#"
+      url = "#"
 
     # Add custom links here by uncommenting code below. To remove links just delete
     # the [[params.navigation.links]] map associated with that link. Copy and paste
@@ -82,8 +82,8 @@ disqusShortname = ""
     # To change the background image on the homepage banner, replace 'banner.jpg' in
     # the 'static/img' folder.
     title = "Hi, my name is Deniz"
-    subtitle = "This is my portfolio website"
-    buttonText = "Get Started"
+    subtitle = "Thank you for taking the time to view my blog!"
+    buttonText = "Fun starts with this click"
 
 
   # Tiles Section
@@ -93,7 +93,7 @@ disqusShortname = ""
     
     [[params.tiles.showcase]]
       title = "Aliquam"
-      subtitle = "Ipsum Dolor Sit Amet"
+      subtitle = "Igdss Dolor Sit Amet"
       image = "pic01.jpg"
       url = "blogs/aliquam"
 
@@ -187,7 +187,7 @@ disqusShortname = ""
   # Footer section
   [params.footer]
     enable = true
-    copyright = "Company Name"
+    copyright = "Deniz Gokmen"
 
     # Uses font awesome icons
     [[params.footer.social]]
