@@ -1,0 +1,155 @@
+---
+categories:
+- ""
+- ""
+date: "2017-10-31T22:26:13-05:00"
+description: Youth Risk Behavior Surveillance
+draft: false
+image: pic1000.jpg
+keywords: ""
+slug: blog7
+title: Youth Risk Behavior Surveillance
+---
+
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=8, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+```{r load-libraries, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(GGally)
+library(readxl)
+library(here)
+library(skimr)
+library(janitor)
+library(broom)
+library(tidyquant)
+library(infer)
+library(openintro)
+library(tidyquant)
+```
+
+
+Exploring the relationship between weight and physical activity
+
+
+## Load the data
+
+
+```{r}
+data(yrbss)
+glimpse(yrbss)
+skim(yrbss)
+```
+
+
+## Exploratory Data Analysis
+
+```{r, eda_on_weight}
+
+Number_of_missing_weight <- count(yrbss,is.na(yrbss$weight))
+Number_of_missing_weight[2,2]       ## take the number of missing weight only
+
+temp <- yrbss%>%
+  filter(weight != is.na(weight))     ## eliminate NAs to calculate summary statistics
+
+mean.weight <- mean(temp$weight)
+median.weight <- median(temp$weight)
+
+summary <- yrbss %>%
+  filter(!is.na(weight))%>%
+  summarise(mean_weight = mean.weight , min_weight = min(weight), max = max(weight), median_weight = median.weight, sd_weights = sd(weights))
+summary
+
+ggplot(temp, aes(x= weight))+
+  geom_density()+
+  theme_bw()+
+   geom_vline(xintercept = mean.weight, size = 0.5, colour = "red") +       #add mean line
+    geom_vline(xintercept = median.weight, size = 0.5, colour = "green")+   #add median line
+  geom_text(aes(x=mean.weight+8, label=paste0("Mean\n", round(mean.weight,2)), y=0.01))+
+  geom_text(aes(x=median.weight-8, label=paste0("Median\n", round(median.weight,2)), y=0.02))+
+  labs(title = "Distribution of weights", x="Weight", y="")
+```
+
+
+
+>We are missing 1004 values for weight. Based on our graph, median weight of the participants is at 64.41kg, while mean weight is at 67.91kg.
+
+
+```{r}
+temp <- yrbss %>%
+  filter(!is.na(physically_active_7d),!is.na(weight))%>%
+  group_by(physically_active_7d)
+
+temp$physically_active_7d <- as.character(temp$physically_active_7d)
+  
+
+ggplot(temp, aes(x=weight, y=physically_active_7d))+
+  geom_boxplot()+
+  theme_bw()+
+  labs(title="Weight vs Physical activity", x="Weight", y="Number of days with physical act. in the last 7")
+
+
+```
+
+>It seems that there is a positive correlation between weight and physical activity. High schooler's that had below 2 days of physical activity seem to have the lowest weight on average, while those that had 5 and above usually had higher weights. 
+
+  
+```{r}
+yrbss <- yrbss %>% 
+  mutate(physical_3plus = ifelse(physically_active_7d >= 3, "yes", "no"))
+
+yrbss %>% filter(!is.na(physical_3plus)) %>% 
+  group_by(physical_3plus) %>% 
+  summarise(count = n()) %>% 
+  mutate(prop= count/sum(count))
+
+
+```
+
+```{r}
+physically_active_no = yrbss %>%
+  filter(physical_3plus == "no")%>%
+  summarise(count = n())
+
+physically_active_total = yrbss %>%
+  filter(!is.na(physical_3plus))%>%
+  summarise(count = n())
+
+prop.test(physically_active_no$count, physically_active_total$count)
+
+
+```
+
+
+```{r, boxplot}
+temp <- yrbss%>%
+  filter(!is.na(physical_3plus))
+
+ggplot(temp, aes(x=weight, y=physical_3plus))+
+  geom_boxplot()+
+  theme_bw()+
+  labs(title="Weight vs Physical activity", x="Weight", y="3 or more days with physical act. in the last 7?")
+```
+
+
+>This boxplot confirms our previous considerations about the correlation between weight and physical activity. We notice that 25th percentile, median and 75th percentile are higher for the group that answered "Yes" to the question asked.
+It is clear that high schoolers that had 3 or more days of physical activity in the last week have higher weight on average than those who did not. 
+
+

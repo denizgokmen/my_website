@@ -99,9 +99,9 @@ disqusShortname = ""
       url = "blogs/blog6"
 
     [[params.tiles.showcase]]
-      title = "n"
-      image = ""
-      url = "blogs/blog4"
+      title = "Youth Risk Behavior Surveillance"
+      image = "pic1000.jpg"
+      url = "blogs/blog7"
 
     [[params.tiles.showcase]]
       title = "Magna"
@@ -110,9 +110,9 @@ disqusShortname = ""
       url = "blogs/magna"
 
     [[params.tiles.showcase]]
-      title = "CV"
-      image = "pic01.png"
-      url = "blogs/CV"
+      title = ""
+      image = ""
+      url = "*"
       
     # You can make more showcases by copy and pasting the code above
 
@@ -126,8 +126,8 @@ disqusShortname = ""
   # Section Type Two
   [params.two]
     enable = true
-    title = "A little about me"
-    subtitle = """Masters in Financial Analysis student at London Business School with a passion for LEGO, NBA, venture capital and entrepreneurship"""
+    title = "Please feel free to send me your feedback"
+    subtitle = """You can also reach me through Github"""
     buttonText = "Get Started"
     url = "blogs"
 

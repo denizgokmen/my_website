@@ -1,0 +1,354 @@
+---
+categories:
+- ""
+- ""
+date: "2017-10-31T22:26:13-05:00"
+description: Youth Risk Behavior Surveillance
+draft: false
+image: pic1000.jpg
+keywords: ""
+slug: blog7
+title: Youth Risk Behavior Surveillance
+---
+
+
+
+<p>Exploring the relationship between weight and physical activity</p>
+<div id="load-the-data" class="section level2">
+<h2>Load the data</h2>
+<pre class="r"><code>data(yrbss)
+glimpse(yrbss)</code></pre>
+<pre><code>## Rows: 13,583
+## Columns: 13
+## $ age                      &lt;int&gt; 14, 14, 15, 15, 15, 15, 15, 14, 15, 15, 15, …
+## $ gender                   &lt;chr&gt; &quot;female&quot;, &quot;female&quot;, &quot;female&quot;, &quot;female&quot;, &quot;fem…
+## $ grade                    &lt;chr&gt; &quot;9&quot;, &quot;9&quot;, &quot;9&quot;, &quot;9&quot;, &quot;9&quot;, &quot;9&quot;, &quot;9&quot;, &quot;9&quot;, &quot;9&quot;,…
+## $ hispanic                 &lt;chr&gt; &quot;not&quot;, &quot;not&quot;, &quot;hispanic&quot;, &quot;not&quot;, &quot;not&quot;, &quot;not…
+## $ race                     &lt;chr&gt; &quot;Black or African American&quot;, &quot;Black or Afric…
+## $ height                   &lt;dbl&gt; NA, NA, 1.73, 1.60, 1.50, 1.57, 1.65, 1.88, …
+## $ weight                   &lt;dbl&gt; NA, NA, 84.4, 55.8, 46.7, 67.1, 131.5, 71.2,…
+## $ helmet_12m               &lt;chr&gt; &quot;never&quot;, &quot;never&quot;, &quot;never&quot;, &quot;never&quot;, &quot;did not…
+## $ text_while_driving_30d   &lt;chr&gt; &quot;0&quot;, NA, &quot;30&quot;, &quot;0&quot;, &quot;did not drive&quot;, &quot;did no…
+## $ physically_active_7d     &lt;int&gt; 4, 2, 7, 0, 2, 1, 4, 4, 5, 0, 0, 0, 4, 7, 7,…
+## $ hours_tv_per_school_day  &lt;chr&gt; &quot;5+&quot;, &quot;5+&quot;, &quot;5+&quot;, &quot;2&quot;, &quot;3&quot;, &quot;5+&quot;, &quot;5+&quot;, &quot;5+&quot;…
+## $ strength_training_7d     &lt;int&gt; 0, 0, 0, 0, 1, 0, 2, 0, 3, 0, 3, 0, 0, 7, 7,…
+## $ school_night_hours_sleep &lt;chr&gt; &quot;8&quot;, &quot;6&quot;, &quot;&lt;5&quot;, &quot;6&quot;, &quot;9&quot;, &quot;8&quot;, &quot;9&quot;, &quot;6&quot;, &quot;&lt;5…</code></pre>
+<pre class="r"><code>skim(yrbss)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-1">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">yrbss</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">13583</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">13</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">8</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">gender</td>
+<td align="right">12</td>
+<td align="right">1.00</td>
+<td align="right">4</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">grade</td>
+<td align="right">79</td>
+<td align="right">0.99</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">hispanic</td>
+<td align="right">231</td>
+<td align="right">0.98</td>
+<td align="right">3</td>
+<td align="right">8</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">race</td>
+<td align="right">2805</td>
+<td align="right">0.79</td>
+<td align="right">5</td>
+<td align="right">41</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">helmet_12m</td>
+<td align="right">311</td>
+<td align="right">0.98</td>
+<td align="right">5</td>
+<td align="right">12</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">text_while_driving_30d</td>
+<td align="right">918</td>
+<td align="right">0.93</td>
+<td align="right">1</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">8</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">hours_tv_per_school_day</td>
+<td align="right">338</td>
+<td align="right">0.98</td>
+<td align="right">1</td>
+<td align="right">12</td>
+<td align="right">0</td>
+<td align="right">7</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">school_night_hours_sleep</td>
+<td align="right">1248</td>
+<td align="right">0.91</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">7</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">age</td>
+<td align="right">77</td>
+<td align="right">0.99</td>
+<td align="right">16.16</td>
+<td align="right">1.26</td>
+<td align="right">12.00</td>
+<td align="right">15.0</td>
+<td align="right">16.00</td>
+<td align="right">17.00</td>
+<td align="right">18.00</td>
+<td align="left">▁▂▅▅▇</td>
+</tr>
+<tr class="even">
+<td align="left">height</td>
+<td align="right">1004</td>
+<td align="right">0.93</td>
+<td align="right">1.69</td>
+<td align="right">0.10</td>
+<td align="right">1.27</td>
+<td align="right">1.6</td>
+<td align="right">1.68</td>
+<td align="right">1.78</td>
+<td align="right">2.11</td>
+<td align="left">▁▅▇▃▁</td>
+</tr>
+<tr class="odd">
+<td align="left">weight</td>
+<td align="right">1004</td>
+<td align="right">0.93</td>
+<td align="right">67.91</td>
+<td align="right">16.90</td>
+<td align="right">29.94</td>
+<td align="right">56.2</td>
+<td align="right">64.41</td>
+<td align="right">76.20</td>
+<td align="right">180.99</td>
+<td align="left">▆▇▂▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">physically_active_7d</td>
+<td align="right">273</td>
+<td align="right">0.98</td>
+<td align="right">3.90</td>
+<td align="right">2.56</td>
+<td align="right">0.00</td>
+<td align="right">2.0</td>
+<td align="right">4.00</td>
+<td align="right">7.00</td>
+<td align="right">7.00</td>
+<td align="left">▆▂▅▃▇</td>
+</tr>
+<tr class="odd">
+<td align="left">strength_training_7d</td>
+<td align="right">1176</td>
+<td align="right">0.91</td>
+<td align="right">2.95</td>
+<td align="right">2.58</td>
+<td align="right">0.00</td>
+<td align="right">0.0</td>
+<td align="right">3.00</td>
+<td align="right">5.00</td>
+<td align="right">7.00</td>
+<td align="left">▇▂▅▂▅</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="exploratory-data-analysis" class="section level2">
+<h2>Exploratory Data Analysis</h2>
+<pre class="r"><code>Number_of_missing_weight &lt;- count(yrbss,is.na(yrbss$weight))
+Number_of_missing_weight[2,2]       ## take the number of missing weight only</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##       n
+##   &lt;int&gt;
+## 1  1004</code></pre>
+<pre class="r"><code>temp &lt;- yrbss%&gt;%
+  filter(weight != is.na(weight))     ## eliminate NAs to calculate summary statistics
+
+mean.weight &lt;- mean(temp$weight)
+median.weight &lt;- median(temp$weight)
+
+summary &lt;- yrbss %&gt;%
+  filter(!is.na(weight))%&gt;%
+  summarise(mean_weight = mean.weight , min_weight = min(weight), max = max(weight), median_weight = median.weight, sd_weights = sd(weights))
+summary</code></pre>
+<pre><code>## # A tibble: 1 x 5
+##   mean_weight min_weight   max median_weight sd_weights
+##         &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;
+## 1        67.9       29.9  181.          64.4      0.111</code></pre>
+<pre class="r"><code>ggplot(temp, aes(x= weight))+
+  geom_density()+
+  theme_bw()+
+   geom_vline(xintercept = mean.weight, size = 0.5, colour = &quot;red&quot;) +       #add mean line
+    geom_vline(xintercept = median.weight, size = 0.5, colour = &quot;green&quot;)+   #add median line
+  geom_text(aes(x=mean.weight+8, label=paste0(&quot;Mean\n&quot;, round(mean.weight,2)), y=0.01))+
+  geom_text(aes(x=median.weight-8, label=paste0(&quot;Median\n&quot;, round(median.weight,2)), y=0.02))+
+  labs(title = &quot;Distribution of weights&quot;, x=&quot;Weight&quot;, y=&quot;&quot;)</code></pre>
+<p><img src="/blogs/blog7_files/figure-html/eda_on_weight-1.png" width="768" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p>We are missing 1004 values for weight. Based on our graph, median weight of the participants is at 64.41kg, while mean weight is at 67.91kg.</p>
+</blockquote>
+<pre class="r"><code>temp &lt;- yrbss %&gt;%
+  filter(!is.na(physically_active_7d),!is.na(weight))%&gt;%
+  group_by(physically_active_7d)
+
+temp$physically_active_7d &lt;- as.character(temp$physically_active_7d)
+  
+
+ggplot(temp, aes(x=weight, y=physically_active_7d))+
+  geom_boxplot()+
+  theme_bw()+
+  labs(title=&quot;Weight vs Physical activity&quot;, x=&quot;Weight&quot;, y=&quot;Number of days with physical act. in the last 7&quot;)</code></pre>
+<p><img src="/blogs/blog7_files/figure-html/unnamed-chunk-2-1.png" width="768" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p>It seems that there is a positive correlation between weight and physical activity. High schooler’s that had below 2 days of physical activity seem to have the lowest weight on average, while those that had 5 and above usually had higher weights.</p>
+</blockquote>
+<pre class="r"><code>yrbss &lt;- yrbss %&gt;% 
+  mutate(physical_3plus = ifelse(physically_active_7d &gt;= 3, &quot;yes&quot;, &quot;no&quot;))
+
+yrbss %&gt;% filter(!is.na(physical_3plus)) %&gt;% 
+  group_by(physical_3plus) %&gt;% 
+  summarise(count = n()) %&gt;% 
+  mutate(prop= count/sum(count))</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   physical_3plus count  prop
+##   &lt;chr&gt;          &lt;int&gt; &lt;dbl&gt;
+## 1 no              4404 0.331
+## 2 yes             8906 0.669</code></pre>
+<pre class="r"><code>physically_active_no = yrbss %&gt;%
+  filter(physical_3plus == &quot;no&quot;)%&gt;%
+  summarise(count = n())
+
+physically_active_total = yrbss %&gt;%
+  filter(!is.na(physical_3plus))%&gt;%
+  summarise(count = n())
+
+prop.test(physically_active_no$count, physically_active_total$count)</code></pre>
+<pre><code>## 
+##  1-sample proportions test with continuity correction
+## 
+## data:  $ out of $physically_active_no out of physically_active_totalcount out of count
+## X-squared = 1522, df = 1, p-value &lt;2e-16
+## alternative hypothesis: true p is not equal to 0.5
+## 95 percent confidence interval:
+##  0.323 0.339
+## sample estimates:
+##     p 
+## 0.331</code></pre>
+<pre class="r"><code>temp &lt;- yrbss%&gt;%
+  filter(!is.na(physical_3plus))
+
+ggplot(temp, aes(x=weight, y=physical_3plus))+
+  geom_boxplot()+
+  theme_bw()+
+  labs(title=&quot;Weight vs Physical activity&quot;, x=&quot;Weight&quot;, y=&quot;3 or more days with physical act. in the last 7?&quot;)</code></pre>
+<p><img src="/blogs/blog7_files/figure-html/boxplot-1.png" width="768" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p>This boxplot confirms our previous considerations about the correlation between weight and physical activity. We notice that 25th percentile, median and 75th percentile are higher for the group that answered “Yes” to the question asked.
+It is clear that high schoolers that had 3 or more days of physical activity in the last week have higher weight on average than those who did not.</p>
+</blockquote>
+</div>

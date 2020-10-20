@@ -26,6 +26,16 @@
     </item>
     
     <item>
+      <title>Youth Risk Behavior Surveillance</title>
+      <link>/blogs/blog7/</link>
+      <pubDate>Tue, 31 Oct 2017 22:26:13 -0500</pubDate>
+      
+      <guid>/blogs/blog7/</guid>
+      <description>Exploring the relationship between weight and physical activity
+Load the data data(yrbss) glimpse(yrbss) ## Rows: 13,583 ## Columns: 13 ## $ age &amp;lt;int&amp;gt; 14, 14, 15, 15, 15, 15, 15, 14, 15, 15, 15, … ## $ gender &amp;lt;chr&amp;gt; &amp;quot;female&amp;quot;, &amp;quot;female&amp;quot;, &amp;quot;female&amp;quot;, &amp;quot;female&amp;quot;, &amp;quot;fem… ## $ grade &amp;lt;chr&amp;gt; &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;,… ## $ hispanic &amp;lt;chr&amp;gt; &amp;quot;not&amp;quot;, &amp;quot;not&amp;quot;, &amp;quot;hispanic&amp;quot;, &amp;quot;not&amp;quot;, &amp;quot;not&amp;quot;, &amp;quot;not… ## $ race &amp;lt;chr&amp;gt; &amp;quot;Black or African American&amp;quot;, &amp;quot;Black or Afric… ## $ height &amp;lt;dbl&amp;gt; NA, NA, 1.</description>
+    </item>
+    
+    <item>
       <title>Magna</title>
       <link>/blogs/magna/</link>
       <pubDate>Tue, 31 Oct 2017 22:26:09 -0500</pubDate>
