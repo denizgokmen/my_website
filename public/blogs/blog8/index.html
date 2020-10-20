@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="This is a blog by a MFA student">
+	<meta name="author" content="Deniz">
+	<meta name="generator" content="Hugo 0.75.1" />
+	<title>Differences between directors &middot; Deniz</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Deniz Gokmen</strong> <span>Porfolio Website by MFA student</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+                <li><a href="/blogs">Blogs</a></li>
+            
+                <li><a href="/"></a></li>
+            
+                <li><a href="/"></a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="/blogs" class="button special fit">Get Started</a></li>
+            
+            
+                <li><a href="/" class="button fit">Log In</a></li>
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>Differences between directors</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/blogs/pic2000.jpg" alt="" /></span>
+                            
+                            
+
+
+<p>Tim Burton vs Steven Spielberg</p>
+<p><img src="/Users/mac/Desktop/my_website/images/directors.png" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>movies &lt;- read_csv(here::here(&quot;data&quot;, &quot;movies.csv&quot;))
+glimpse(movies)</code></pre>
+<pre><code>## Rows: 2,961
+## Columns: 11
+## $ title               &lt;chr&gt; &quot;Avatar&quot;, &quot;Titanic&quot;, &quot;Jurassic World&quot;, &quot;The Aveng…
+## $ genre               &lt;chr&gt; &quot;Action&quot;, &quot;Drama&quot;, &quot;Action&quot;, &quot;Action&quot;, &quot;Action&quot;, …
+## $ director            &lt;chr&gt; &quot;James Cameron&quot;, &quot;James Cameron&quot;, &quot;Colin Trevorro…
+## $ year                &lt;dbl&gt; 2009, 1997, 2015, 2012, 2008, 1999, 1977, 2015, 2…
+## $ duration            &lt;dbl&gt; 178, 194, 124, 173, 152, 136, 125, 141, 164, 93, …
+## $ gross               &lt;dbl&gt; 7.61e+08, 6.59e+08, 6.52e+08, 6.23e+08, 5.33e+08,…
+## $ budget              &lt;dbl&gt; 2.37e+08, 2.00e+08, 1.50e+08, 2.20e+08, 1.85e+08,…
+## $ cast_facebook_likes &lt;dbl&gt; 4834, 45223, 8458, 87697, 57802, 37723, 13485, 92…
+## $ votes               &lt;dbl&gt; 886204, 793059, 418214, 995415, 1676169, 534658, …
+## $ reviews             &lt;dbl&gt; 3777, 2843, 1934, 2425, 5312, 3917, 1752, 1752, 3…
+## $ rating              &lt;dbl&gt; 7.9, 7.7, 7.0, 8.1, 9.0, 6.5, 8.7, 7.5, 8.5, 7.2,…</code></pre>
+<pre class="r"><code>movies_clean &lt;- movies %&gt;%      #clean data frame to have only Tim Burton and Spielberg movies
+  filter(director==&quot;Tim Burton&quot;|director==&quot;Steven Spielberg&quot;)
+
+t.test(rating ~ director, data = movies_clean)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  rating by director
+## t = 3, df = 31, p-value = 0.01
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0.16 1.13
+## sample estimates:
+## mean in group Steven Spielberg       mean in group Tim Burton 
+##                           7.57                           6.93</code></pre>
+<pre class="r"><code>obs_diff_movies &lt;- movies_clean %&gt;%
+  specify(rating ~ director) %&gt;%
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;Steven Spielberg&quot;, &quot;Tim Burton&quot;))
+
+null_dist &lt;- movies_clean %&gt;%
+  specify(rating ~ director) %&gt;%
+  hypothesize(null = &quot;independence&quot;) %&gt;%
+  generate(reps = 2000, type = &quot;permute&quot;) %&gt;%
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;Steven Spielberg&quot;, &quot;Tim Burton&quot;)) # create null distribution
+
+null_dist %&gt;% visualize() +
+  shade_p_value(obs_stat = obs_diff_movies, direction = &quot;two-sided&quot;)</code></pre>
+<p><img src="/blogs/blog8_files/figure-html/unnamed-chunk-1-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>null_dist %&gt;%
+  get_p_value(obs_stat = obs_diff_movies, direction = &quot;two_sided&quot;)</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   p_value
+##     &lt;dbl&gt;
+## 1   0.009</code></pre>
+<pre class="r"><code>CI &lt;- movies_clean %&gt;%
+  group_by(director)%&gt;%
+  summarise(mean = mean(rating), SE = sd(rating)/sqrt(n()), t_critical = qt(0.975,n()-1),upper = mean + SE*t_critical, lower = mean -SE*t_critical)
+
+ggplot(CI, aes(x=mean, y=reorder(director, mean)))+
+  geom_point(aes(color = director, size = 1.7))+
+  geom_rect(aes(xmin=max(lower), xmax=min(upper), ymin = -Inf, ymax = +Inf ,alpha = .3))+
+  geom_errorbar(aes(xmin = lower , xmax = upper, width = 0.1, color = director, size = 1.5))+
+  labs(title = &quot;Do Spielberg and Burton have the same IMBD ratings?&quot;, subtitle = &quot;95% confidence intervals overlap&quot;, y = &quot;&quot;, x = &quot;Mean IMBD Rating&quot;)+
+  theme_bw()+
+   geom_label(aes(y=reorder(director,mean),x=lower,
+                   label = round(lower,2)),
+                hjust=0.4, vjust=-0.4, fill = NA, label.size = NA)+
+   geom_label(aes(y=reorder(director,mean),x=upper,
+                   label = round(upper,2)),
+                hjust=0.4, vjust=-0.4, fill = NA, label.size = NA)+
+  theme(legend.position = &quot;none&quot;)+
+  geom_text(aes(label=round(mean,2), vjust =-2))</code></pre>
+<p><img src="/blogs/blog8_files/figure-html/unnamed-chunk-2-1.png" width="768" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p>We can reject the null hypothesis because the p value is below 0.05. Consequently Tim Burton and Steven Spielberg are 95% unlikely to have the same mean IBD rating.</p>
+</blockquote>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="#" class="icon alt #" target="_blank"><span class="label">#</span></a></li>
+                
+                    <li><a href="#" class="icon alt #" target="_blank"><span class="label">#</span></a></li>
+                
+                    <li><a href="#" class="icon alt #" target="_blank"><span class="label">#</span></a></li>
+                
+                    <li><a href="https://github.com/denizgokmen/my_website" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="#" class="icon alt #" target="_blank"><span class="label">#</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Deniz Gokmen</li>
+                
+                <li># <a href="#">#</a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>

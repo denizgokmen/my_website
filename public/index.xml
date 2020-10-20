@@ -17,6 +17,20 @@
     </item>
     
     <item>
+      <title>My favorite place on Earth</title>
+      <link>/blogs/blog9/</link>
+      <pubDate>Tue, 31 Oct 2017 22:42:51 -0500</pubDate>
+      
+      <guid>/blogs/blog9/</guid>
+      <description>Today, I want to talk a little it about my favorite place on Earth: Columbus, Ohio
+At this beautiful place you can visit:
+ COSI, Columbus Museum of Art, Short North Arts District, and Franklin Park Conservatory and Botanical Gardens
+ “Columbus is a town in which almost anything is likely to happen, and in which almost everything has.” — James Thurber
+##Fun Fact##
+Did you know Thomas Edison was born in Milan, Ohio?</description>
+    </item>
+    
+    <item>
       <title>Tempus</title>
       <link>/blogs/tempus/</link>
       <pubDate>Tue, 31 Oct 2017 22:26:13 -0500</pubDate>
@@ -33,6 +47,16 @@
       <guid>/blogs/blog7/</guid>
       <description>Exploring the relationship between weight and physical activity
 Load the data data(yrbss) glimpse(yrbss) ## Rows: 13,583 ## Columns: 13 ## $ age &amp;lt;int&amp;gt; 14, 14, 15, 15, 15, 15, 15, 14, 15, 15, 15, … ## $ gender &amp;lt;chr&amp;gt; &amp;quot;female&amp;quot;, &amp;quot;female&amp;quot;, &amp;quot;female&amp;quot;, &amp;quot;female&amp;quot;, &amp;quot;fem… ## $ grade &amp;lt;chr&amp;gt; &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;9&amp;quot;,… ## $ hispanic &amp;lt;chr&amp;gt; &amp;quot;not&amp;quot;, &amp;quot;not&amp;quot;, &amp;quot;hispanic&amp;quot;, &amp;quot;not&amp;quot;, &amp;quot;not&amp;quot;, &amp;quot;not… ## $ race &amp;lt;chr&amp;gt; &amp;quot;Black or African American&amp;quot;, &amp;quot;Black or Afric… ## $ height &amp;lt;dbl&amp;gt; NA, NA, 1.</description>
+    </item>
+    
+    <item>
+      <title>Differences between directors</title>
+      <link>/blogs/blog8/</link>
+      <pubDate>Tue, 31 Oct 2017 22:26:09 -0500</pubDate>
+      
+      <guid>/blogs/blog8/</guid>
+      <description>Tim Burton vs Steven Spielberg
+movies &amp;lt;- read_csv(here::here(&amp;quot;data&amp;quot;, &amp;quot;movies.csv&amp;quot;)) glimpse(movies) ## Rows: 2,961 ## Columns: 11 ## $ title &amp;lt;chr&amp;gt; &amp;quot;Avatar&amp;quot;, &amp;quot;Titanic&amp;quot;, &amp;quot;Jurassic World&amp;quot;, &amp;quot;The Aveng… ## $ genre &amp;lt;chr&amp;gt; &amp;quot;Action&amp;quot;, &amp;quot;Drama&amp;quot;, &amp;quot;Action&amp;quot;, &amp;quot;Action&amp;quot;, &amp;quot;Action&amp;quot;, … ## $ director &amp;lt;chr&amp;gt; &amp;quot;James Cameron&amp;quot;, &amp;quot;James Cameron&amp;quot;, &amp;quot;Colin Trevorro… ## $ year &amp;lt;dbl&amp;gt; 2009, 1997, 2015, 2012, 2008, 1999, 1977, 2015, 2… ## $ duration &amp;lt;dbl&amp;gt; 178, 194, 124, 173, 152, 136, 125, 141, 164, 93, … ## $ gross &amp;lt;dbl&amp;gt; 7.</description>
     </item>
     
     <item>

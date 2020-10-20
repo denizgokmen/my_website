@@ -109,7 +109,7 @@ disqusShortname = ""
       url = "blogs/blog8"
 
     [[params.tiles.showcase]]
-      title = "GDP components over time and among countries"
+      title = "My favourite place on Earth"
       image = "pic3000.jpg"
       url = "blogs/blog9"
       

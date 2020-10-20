@@ -1,0 +1,111 @@
+---
+categories:
+- ""
+- ""
+date: "2017-10-31T22:26:09-05:00"
+description: ""
+draft: false
+image: pic2000.jpg
+keywords: ""
+slug: blog8
+title: Differences between directors 
+---
+
+
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=8, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+```{r load-libraries, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(GGally)
+library(readxl)
+library(here)
+library(skimr)
+library(janitor)
+library(broom)
+library(tidyquant)
+library(infer)
+library(openintro)
+library(tidyquant)
+```
+
+
+Tim Burton vs Steven Spielberg
+
+```{r directors, echo=FALSE, out.width="100%"}
+knitr::include_graphics(here::here("images", "directors.png"), error = FALSE)
+```
+
+```{r load-movies-data}
+movies <- read_csv(here::here("data", "movies.csv"))
+glimpse(movies)
+```
+
+
+```{r}
+movies_clean <- movies %>%      #clean data frame to have only Tim Burton and Spielberg movies
+  filter(director=="Tim Burton"|director=="Steven Spielberg")
+
+t.test(rating ~ director, data = movies_clean)
+
+obs_diff_movies <- movies_clean %>%
+  specify(rating ~ director) %>%
+  calculate(stat = "diff in means", order = c("Steven Spielberg", "Tim Burton"))
+
+null_dist <- movies_clean %>%
+  specify(rating ~ director) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 2000, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("Steven Spielberg", "Tim Burton")) # create null distribution
+
+null_dist %>% visualize() +
+  shade_p_value(obs_stat = obs_diff_movies, direction = "two-sided")
+
+null_dist %>%
+  get_p_value(obs_stat = obs_diff_movies, direction = "two_sided")
+
+```
+
+
+```{r}
+CI <- movies_clean %>%
+  group_by(director)%>%
+  summarise(mean = mean(rating), SE = sd(rating)/sqrt(n()), t_critical = qt(0.975,n()-1),upper = mean + SE*t_critical, lower = mean -SE*t_critical)
+
+ggplot(CI, aes(x=mean, y=reorder(director, mean)))+
+  geom_point(aes(color = director, size = 1.7))+
+  geom_rect(aes(xmin=max(lower), xmax=min(upper), ymin = -Inf, ymax = +Inf ,alpha = .3))+
+  geom_errorbar(aes(xmin = lower , xmax = upper, width = 0.1, color = director, size = 1.5))+
+  labs(title = "Do Spielberg and Burton have the same IMBD ratings?", subtitle = "95% confidence intervals overlap", y = "", x = "Mean IMBD Rating")+
+  theme_bw()+
+   geom_label(aes(y=reorder(director,mean),x=lower,
+                   label = round(lower,2)),
+                hjust=0.4, vjust=-0.4, fill = NA, label.size = NA)+
+   geom_label(aes(y=reorder(director,mean),x=upper,
+                   label = round(upper,2)),
+                hjust=0.4, vjust=-0.4, fill = NA, label.size = NA)+
+  theme(legend.position = "none")+
+  geom_text(aes(label=round(mean,2), vjust =-2))
+ 
+```
+
+>We can reject the null hypothesis because the p value is below 0.05. Consequently Tim Burton and Steven Spielberg are 95% unlikely to have the same mean IBD rating.
+
+
