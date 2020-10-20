@@ -1,0 +1,143 @@
+---
+categories:
+- ""
+- ""
+date: "2017-10-31T22:42:51-05:00"
+description: ""
+draft: false
+image: pic3000.jpg
+keywords: ""
+slug: blog9
+title: GDP components over time and among countries
+---
+
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=8, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+
+```{r read_GDP_data, eval=FALSE}
+
+library(readxl)
+
+UN_GDP_data  <-  read_excel(here::here("data", "Download-GDPconstant-USD-countries.xls"), # Excel filename
+                sheet="Download-GDPconstant-USD-countr", # Sheet name
+                skip=2) # Number of rows to skip
+glimpse(UN_GDP_data)
+```
+
+
+```{r reshape_GDP_data}
+
+library(tidyr)
+tidy_GDP_data  <-  UN_GDP_data %>% 
+                     pivot_longer(cols=4:51,            #collapse years into 1 column
+                                  names_to="year",
+                                  values_to="value") %>% 
+                     pivot_wider(names_from="IndicatorName",  #put indicators into columns to rename them
+                                 values_from="value") 
+
+tidy_GDP_data <- tidy_GDP_data %>%          #rename indicators
+                  rename("Household expenditure" = "Household consumption expenditure (including Non-profit institutions serving households)",
+                  "Government expenditure"="General government final consumption expenditure",
+                  "Exports"="Exports of goods and services",
+                  "Imports"="Imports of goods and services",
+                  "Gross Capital Formation" = "Gross fixed capital formation (including Acquisitions less disposals of valuables)",
+                  "Agriculture"="Agriculture, hunting, forestry, fishing (ISIC A-B)",
+                  "Mining"="Mining, Manufacturing, Utilities (ISIC C-E)",
+                  "Manufacturing"="Manufacturing (ISIC D)",
+                  "Construction"="Construction (ISIC F)",
+                  "Wholesale"="Wholesale, retail trade, restaurants and hotels (ISIC G-H)",
+                  "Transport"="Transport, storage and communication (ISIC I)",
+                  "Other"="Other Activities (ISIC J-P)",
+                  "Inventory"="Changes in inventories")
+
+
+tidy_GDP_data <- tidy_GDP_data %>%          #put indicators back in a single column
+                  pivot_longer(cols=4:20,
+                  names_to="IndicatorName",
+                  values_to="value") 
+
+
+tidy_GDP_data$value <- tidy_GDP_data$value/1e9   #express numbers in billions
+                    
+
+# Let us compare GDP components for these 3 countries
+country_list <- c("United States","India", "Germany")
+```
+
+
+```{r gdp1, echo=FALSE, out.width="100%"}
+knitr::include_graphics(here::here("images", "gdp1.png"), error = FALSE)
+```
+```{r}
+indicatorlist <- c("Gross Capital Formation", "Exports", "Government expenditure", "Household expenditure", "Imports")
+
+graph1 <- tidy_GDP_data %>%
+  filter(Country %in% country_list & IndicatorName %in% indicatorlist)
+
+ggplot(graph1, aes(x=year, y=value))+
+  geom_line(aes(group = IndicatorName, color = IndicatorName))+
+  facet_wrap(~Country, ncol = 3)+
+  labs(title = "GDP Components over time", subtitle = "In constant 2010 USD", x= "", y = " Billions US$")+
+  theme_bw()+
+  scale_x_discrete(breaks=seq(1970, 2016, by = 10))+
+  scale_color_discrete(name = "Components of GDP")
+
+```
+
+
+
+```{r}
+
+GDP_calculate <- tidy_GDP_data %>%
+   filter(IndicatorName %in% c("Gross Capital Formation", "Exports", "Government expenditure", "Household expenditure", "Imports", "Gross Domestic Product (GDP)")) %>% 
+                   pivot_wider(names_from = "IndicatorName",
+                               values_from = "value") %>% 
+                   summarise(Country, year, GDP_calculated = `Household expenditure`+`Government expenditure`+`Gross Capital Formation`+`Exports`-`Imports`, percentage_difference = (GDP_calculated/`Gross Domestic Product (GDP)`-1)*100)
+
+ graph4 <- GDP_calculate %>%
+   group_by(year)%>%
+   na.omit(percentage_difference)%>%
+   summarise(mean_percentage_difference = mean(percentage_difference))
+GDP_calculate
+
+ggplot(graph4, aes(x = year , y = mean_percentage_difference))+
+  geom_point()+
+  labs(title = "Average % difference between Calculated GDP and GDP indicators", x ="", y="Mean % Difference")+
+  theme_bw()+
+  geom_hline(yintercept=0)+
+  scale_x_discrete(breaks=seq(1970, 2016, by = 5))
+
+
+summary_mean <- graph4 %>%
+  summarise(mean = mean(mean_percentage_difference))
+
+```
+
+
+
+>On average, the % difference between what we calculated as GDP and the GDP figure included in the dataframe is -0.85.
+
+
+```{r gdp2, echo=FALSE, out.width="100%"}
+knitr::include_graphics(here::here("images", "gdp2.png"), error = FALSE)
+```
+
+
+
+
