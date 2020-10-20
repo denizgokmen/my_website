@@ -12,6 +12,7 @@ title: GDP components over time and among countries
 ---
 
 
+
 ```{r, setup, echo=FALSE}
 knitr::opts_chunk$set(
   message = FALSE, 
@@ -26,6 +27,23 @@ knitr::opts_chunk$set(
   fig.height=6.75,
   fig.align = "center"
 )
+```
+
+
+```{r load-libraries, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(GGally)
+library(readxl)
+library(here)
+library(skimr)
+library(janitor)
+library(broom)
+library(tidyquant)
+library(infer)
+library(openintro)
+library(tidyquant)
 ```
 
 
