@@ -7,7 +7,7 @@ description: ""
 draft: false
 image: pic02.jpg
 keywords: ""
-slug: Deniz Gokmen
+slug: blog6
 title: "Deniz Gokmen"
 ---
 
