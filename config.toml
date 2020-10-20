@@ -38,7 +38,7 @@ disqusShortname = ""
   # Navigation Section
   [params.navigation]
     title = "Deniz Gokmen"
-    subtitle = "Porfolio Website by a MFA student "
+    subtitle = "Porfolio Website by a MFA student"
     menu = "Menu"
     # Optional logo as brand stored in img/
     # logo = "logo.png"
