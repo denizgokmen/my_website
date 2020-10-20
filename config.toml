@@ -109,9 +109,9 @@ disqusShortname = ""
       url = "blogs/blog8"
 
     [[params.tiles.showcase]]
-      title = ""
-      image = ""
-      url = "*"
+      title = "GDP components over time and among countries"
+      image = "pic3000.jpg"
+      url = "blogs/blog9"
       
     # You can make more showcases by copy and pasting the code above
 
