@@ -140,4 +140,3 @@ knitr::include_graphics(here::here("images", "gdp2.png"), error = FALSE)
 
 
 
-
